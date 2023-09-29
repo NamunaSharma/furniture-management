@@ -1,0 +1,20 @@
+{
+  "categories": [
+    {
+      "name": "Chair",
+      "subcategory": ["Wodden and office chair", "Plastic chair"]
+    },
+    {
+      "name": "Table",
+      "subcategory": ["Tea table", "Dinning table"]
+    },
+    {
+      "name": "Bed",
+      "subcategory": ["Wodden Bed", "king size bed"]
+    },
+    {
+      "name": "Sofa",
+      "subcategory": ["Wodden sofa", "Readymade sofa"]
+    }
+  ]
+}
