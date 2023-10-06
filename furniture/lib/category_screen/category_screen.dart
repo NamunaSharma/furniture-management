@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_interpolations, use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:furniture/category_screen/category_details.dart';
 import 'package:furniture/consts/lists.dart';
@@ -14,37 +16,37 @@ class CategoryScreen extends StatelessWidget {
     var controller = Get.put(ProductController());
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 155, 153, 153),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 8, 35, 47),
+        backgroundColor: const Color.fromARGB(255, 8, 35, 47),
         title: categories.text.fontWeight(FontWeight.bold).white.make(),
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(12),
+          padding: const EdgeInsets.all(12),
           child: GridView.builder(
             shrinkWrap: true,
             itemCount: 4,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 mainAxisSpacing: 8,
                 crossAxisSpacing: 8,
-                mainAxisExtent: 150),
+                mainAxisExtent: 190),
             itemBuilder: (context, index) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
                     categoryImages[index],
-                    height: 120,
-                    width: 200,
+                    height: 160,
+                    width: 220,
                     fit: BoxFit.contain,
                   ),
                   2.heightBox,
                   "${categoriesList[index]}"
                       .text
                       .color(
-                        Color.fromARGB(255, 8, 35, 47),
+                        const Color.fromARGB(255, 8, 35, 47),
                       )
                       .fontWeight(FontWeight.bold)
                       .align(TextAlign.center)
@@ -52,7 +54,7 @@ class CategoryScreen extends StatelessWidget {
                         0.7,
                         0.5,
                         0.1,
-                        Color.fromARGB(255, 8, 35, 47),
+                        const Color.fromARGB(255, 8, 35, 47),
                       )
                       .make(),
                 ],
@@ -61,7 +63,7 @@ class CategoryScreen extends StatelessWidget {
                   .white
                   .rounded
                   .clip(Clip.antiAlias)
-                  .outerShadowSm
+                  .shadowLg
                   .make()
                   .onTap(() {
                 controller.getSubCategories(categoriesList[index]);

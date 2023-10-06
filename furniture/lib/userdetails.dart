@@ -1,107 +1,146 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_literals_to_create_immutables, unnecessary_string_interpolations, unused_field, unused_local_variable, prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ProductDetailsPage extends StatefulWidget {
-  final String userId;
-
-  const ProductDetailsPage({Key? key, required this.userId}) : super(key: key);
-
+class ProductListPage extends StatefulWidget {
   @override
-  ProductDetails createState() => ProductDetails();
+  _ProductListPageState createState() => _ProductListPageState();
 }
 
-class ProductDetails extends State<ProductDetailsPage> {
-  late Future<DocumentSnapshot> userFuture;
-  late Query productQuery;
+class _ProductListPageState extends State<ProductListPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  @override
-  void initState() {
-    super.initState();
-    userFuture = fetchUserDetails(widget.userId);
-    productQuery = FirebaseFirestore.instance
+  Future<void> deleteProduct(String productId, String userId) async {
+    // Delete the product document
+    await _firestore.collection('products').doc(productId).delete();
+
+    // Check if there are any other products associated with the user
+    final userProductsSnapshot = await _firestore
         .collection('products')
-        .where('userId', isEqualTo: widget.userId);
-  }
+        .where('userId', isEqualTo: userId)
+        .get();
 
-  Future<DocumentSnapshot> fetchUserDetails(String userId) async {
-    DocumentSnapshot userSnapshot =
-        await FirebaseFirestore.instance.collection('users').doc(userId).get();
-    return userSnapshot;
+    if (userProductsSnapshot.docs.isEmpty) {
+      // If there are no other products associated with the user, delete the user document
+      await _firestore.collection('users').doc(userId).delete();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('User Profile'),
+        backgroundColor: const Color.fromARGB(255, 15, 39, 58),
+        iconTheme: IconThemeData(color: Colors.white),
+        title: const Text('User Products'),
       ),
-      body: FutureBuilder<DocumentSnapshot>(
-        future: userFuture,
-        builder: (context, userSnapshot) {
-          if (userSnapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (!userSnapshot.hasData) {
-            return Center(child: Text('User not found'));
+      body: StreamBuilder<QuerySnapshot>(
+        stream: _firestore.collection('products').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
 
-          String userName = userSnapshot.data!['userName'];
-          String email = userSnapshot.data!['email'];
+          List<QueryDocumentSnapshot> products = snapshot.data!.docs;
 
-          return StreamBuilder<QuerySnapshot>(
-            stream: productQuery.snapshots(),
-            builder: (context, productSnapshot) {
-              if (productSnapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              }
-
-              int numberOfProducts = productSnapshot.data!.docs.length;
-
-              return SingleChildScrollView(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'User ID: ${widget.userId}',
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                    Text(
-                      'User Name: $userName',
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                    Text(
-                      'Email: $email',
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                    // Text(
-                    //   'Number of Products Posted: $numberOfProducts',
-                    //   style: TextStyle(fontSize: 18.0),
-                    // ),
-                    SizedBox(height: 16.0),
-                    Text(
-                      'Products Posted:',
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                    SizedBox(height: 8.0),
-                    if (numberOfProducts > 0)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: productSnapshot.data!.docs
-                            .map((doc) => Text(
-                                  doc['p_name'],
-                                  style: TextStyle(fontSize: 16.0),
-                                ))
-                            .toList(),
-                      )
-                    else
-                      Text(
-                        'No products posted yet.',
-                        style: TextStyle(fontSize: 16.0),
-                      ),
-                  ],
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              columns: [
+                const DataColumn(
+                  label: Text('User',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
                 ),
-              );
-            },
+                const DataColumn(
+                  label: Text('Email',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                const DataColumn(
+                  label: Text('Product',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                const DataColumn(
+                  label: Text('Category',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                const DataColumn(
+                  label: Text('Actions',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+              ],
+              rows: products.map((product) {
+                var productData = product.data() as Map<String, dynamic>;
+                String userId = productData['userId'];
+                String productName = productData['p_name'];
+                String productCategory = productData['p_category'];
+                String productId = product.id;
+
+                return DataRow(
+                  cells: [
+                    DataCell(
+                      FutureBuilder<DocumentSnapshot>(
+                        future:
+                            _firestore.collection('users').doc(userId).get(),
+                        builder: (context, userSnapshot) {
+                          if (userSnapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          }
+                          if (!userSnapshot.hasData ||
+                              !userSnapshot.data!.exists) {
+                            return const Text('User Not Found');
+                          }
+                          var userData =
+                              userSnapshot.data!.data() as Map<String, dynamic>;
+                          String userName = userData['userName'];
+                          String userEmail = userData['email'];
+                          return Text('$userName');
+                        },
+                      ),
+                    ),
+                    DataCell(
+                      FutureBuilder<DocumentSnapshot>(
+                        future:
+                            _firestore.collection('users').doc(userId).get(),
+                        builder: (context, userSnapshot) {
+                          if (userSnapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          }
+                          if (!userSnapshot.hasData ||
+                              !userSnapshot.data!.exists) {
+                            return const Text('User Not Found');
+                          }
+                          var userData =
+                              userSnapshot.data!.data() as Map<String, dynamic>;
+                          String userEmail = userData['email'];
+                          return Text('$userEmail');
+                        },
+                      ),
+                    ),
+                    DataCell(Text('$productName')),
+                    DataCell(Text('$productCategory')),
+                    DataCell(
+                      IconButton(
+                        icon: const Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                        onPressed: () {
+                          deleteProduct(productId, userId);
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              }).toList(),
+            ),
           );
         },
       ),

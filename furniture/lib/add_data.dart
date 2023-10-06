@@ -1,3 +1,19 @@
+// ignore_for_file: unused_import, duplicate_ignore, non_constant_identifier_names
+
+// ignore_for_file: unused_import
+
+// ignore_for_file: unused_import
+
+// ignore_for_file: unused_import
+
+// ignore_for_file: unused_import
+
+// ignore_for_file: unused_import
+
+// ignore_for_file: unused_import
+
+// ignore_for_file: unused_import
+
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,7 +38,7 @@ class StoreData {
     required String userId,
     required String name,
     required String category,
-    required String subcategory,
+    // required String subcategory,
     required String used_period,
     required String description,
     required String price,
@@ -36,7 +52,7 @@ class StoreData {
     try {
       if (name.isNotEmpty ||
           category.isNotEmpty ||
-          subcategory.isNotEmpty ||
+          // subcategory.isNotEmpty ||
           description.isNotEmpty ||
           price.isNotEmpty ||
           used_period.isNotEmpty ||
@@ -52,7 +68,7 @@ class StoreData {
           'userId': userId,
           'p_name': name,
           'p_category': category,
-          'p_subcategory': subcategory,
+          // 'p_subcategory': subcategory,
           'p_used': used_period,
           'p_price': price,
           'p_seller': seller_name,

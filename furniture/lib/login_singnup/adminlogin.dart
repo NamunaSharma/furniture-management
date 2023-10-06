@@ -1,9 +1,9 @@
+// ignore_for_file: unused_import, prefer_const_constructors, use_build_context_synchronously, avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture/adminscreen.dart';
 import 'package:furniture/adminselfmade.dart';
-
-import 'adminsignup.dart';
 
 class AdminLogin extends StatefulWidget {
   const AdminLogin({super.key});
@@ -19,9 +19,9 @@ class _AdminLoginState extends State<AdminLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: const Color.fromARGB(255, 26, 38, 47),
       ),
       body: Form(
           key: _formkey,
@@ -70,7 +70,8 @@ class _AdminLoginState extends State<AdminLogin> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 121, 3, 206),
+                    backgroundColor: const Color.fromARGB(255, 26, 38, 47),
+                    // backgroundColor: Color.fromARGB(255, 121, 3, 206),
                     textStyle: const TextStyle(
                         fontSize: 25, fontWeight: FontWeight.bold)),
                 onPressed: () async {

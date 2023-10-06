@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_escapes
+
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -16,19 +18,19 @@ class ProductDetails extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {},
-                icon: Icon(
+                icon: const Icon(
                   Icons.share,
                 )),
             IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.favorite_outline),
+                icon: const Icon(Icons.favorite_outline),
                 color: const Color.fromARGB(255, 237, 235, 235))
           ]),
       body: Column(
         children: [
           Expanded(
             child: Padding(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -102,10 +104,10 @@ class ProductDetails extends StatelessWidget {
                 // Handle button press here
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.transparent,
+                backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
               ),
-              child: Text(
+              child: const Text(
                 "Post ",
                 style: TextStyle(
                   color: Colors.white,

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers, avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -16,6 +18,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
           child: Column(
@@ -25,21 +28,21 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 height: 250,
                 child: Lottie.asset("assets/animation_lmgiha5k.json"),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 30.0),
+                margin: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: TextFormField(
                   controller: forgetPasswordController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.email),
                     hintText: 'Email',
                     enabledBorder: OutlineInputBorder(),
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               ElevatedButton(
@@ -53,14 +56,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => LoginPage(),
+                                    builder: (context) => const LoginPage(),
                                   ))
                             });
                   } on FirebaseAuthException catch (e) {
                     print("Error $e");
                   }
                 },
-                child: Text("Forgot Password"),
+                child: const Text("Forgot Password"),
               ),
             ],
           ),

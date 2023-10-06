@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors_in_immutables, library_private_types_in_public_api, avoid_print, prefer_const_constructors, use_build_context_synchronously, sort_child_properties_last, annotate_overrides, unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -27,7 +29,7 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
 
   late String currentName;
   late String currentCategory;
-  late String currentSubcategory;
+  // late String currentSubcategory;
   late String currentUsedPeriod;
   late String currentDescription;
   late String currentPrice;
@@ -66,7 +68,7 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
       if (productData != null) {
         currentName = productData['p_name'];
         currentCategory = productData['p_category'];
-        currentSubcategory = productData['p_subcategory'];
+        // currentSubcategory = productData['p_subcategory'];
         currentUsedPeriod = productData['p_used'];
         currentDescription = productData['p_desc'];
         currentPrice = productData['p_price'];
@@ -79,7 +81,7 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
       // Update the text controllers with the current values
       nameController.text = currentName;
       categoryController.text = currentCategory;
-      subcategoryController.text = currentSubcategory;
+      // subcategoryController.text = currentSubcategory;
       usedPeriodController.text = currentUsedPeriod;
       descriptionController.text = currentDescription;
       priceController.text = currentPrice;
@@ -117,7 +119,7 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
           .update({
         'p_name': nameController.text,
         'p_category': categoryController.text,
-        'p_subcategory': subcategoryController.text,
+        // 'p_subcategory': subcategoryController.text,
         'p_used': usedPeriodController.text,
         'p_desc': descriptionController.text,
         'p_price': priceController.text,
@@ -130,7 +132,7 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
       // Update the current values with the new values
       currentName = nameController.text;
       currentCategory = categoryController.text;
-      currentSubcategory = subcategoryController.text;
+      // currentSubcategory = subcategoryController.text;
       currentUsedPeriod = usedPeriodController.text;
       currentDescription = descriptionController.text;
       currentPrice = priceController.text;
@@ -178,11 +180,13 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink,
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 8, 35, 47),
         title: Text('Update Product'),
         actions: <Widget>[
           IconButton(
+            color: Colors.white,
             icon: Icon(Icons.save),
             onPressed: updateProduct,
           ),
@@ -202,7 +206,7 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
                   // Text Form Fields for each product detail
                   buildTextField("Product Name", nameController),
                   buildTextField("Category", categoryController),
-                  buildTextField("Subcategory", subcategoryController),
+                  // buildTextField("Subcategory", subcategoryController),
                   buildTextField("Used Period", usedPeriodController),
                   buildTextField("Description", descriptionController),
                   buildTextField("Price", priceController),

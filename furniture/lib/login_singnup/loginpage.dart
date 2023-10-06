@@ -1,10 +1,12 @@
+// ignore_for_file: sort_child_properties_last, use_build_context_synchronously, avoid_print, prefer_const_constructors
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:furniture/homescreen.dart';
-import 'package:furniture/login_singnup/signup.dart';
+import 'package:furniture/login_singnup/adminlogin.dart';
 import 'package:lottie/lottie.dart';
 import '../home.dart';
 import 'forgetpassword.dart';
+import 'signup.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,20 +19,20 @@ class _LoginPageState extends State<LoginPage> {
   final _email = TextEditingController();
   final _password = TextEditingController();
   final _formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Color.fromARGB(255, 8, 35, 47),
       ),
       body: Form(
         key: _formkey,
         child: SingleChildScrollView(
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // ignore: sized_box_for_whitespace
               Container(
                 child: Lottie.asset("assets/animation_lmgiha5k.json"),
                 height: 300,
@@ -42,12 +44,12 @@ class _LoginPageState extends State<LoginPage> {
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.email_sharp),
-                  prefixIconColor: Color.fromARGB(255, 94, 13, 194),
+                  prefixIconColor: Color.fromARGB(255, 8, 35, 47),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   labelText: "Enter the email address",
                   hintText: "Enter your full email",
-                  fillColor: Color.fromARGB(255, 96, 81, 134),
+                  fillColor: Color.fromARGB(255, 8, 35, 47),
                 ),
               ),
               const SizedBox(
@@ -60,12 +62,12 @@ class _LoginPageState extends State<LoginPage> {
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.lock),
-                  prefixIconColor: Color.fromARGB(255, 94, 13, 194),
+                  prefixIconColor: Color.fromARGB(255, 8, 35, 47),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   labelText: "Enter the password",
                   hintText: "Enter your password",
-                  fillColor: Color.fromARGB(255, 118, 103, 159),
+                  fillColor: Color.fromARGB(255, 8, 35, 47),
                 ),
                 obscureText: true,
               ),
@@ -74,15 +76,16 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 121, 3, 206),
-                    textStyle: const TextStyle(
-                        fontSize: 25, fontWeight: FontWeight.bold)),
+                  backgroundColor: Color.fromARGB(255, 8, 35, 47),
+                  textStyle: const TextStyle(
+                      fontSize: 25, fontWeight: FontWeight.bold),
+                ),
                 onPressed: () async {
                   var email = _email.text.trim();
                   var password = _password.text.trim();
                   if (email.isEmpty || password.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text("Please fill in all fields"),
                       ),
                     );
@@ -90,22 +93,41 @@ class _LoginPageState extends State<LoginPage> {
                   }
 
                   try {
-                    final User? firebaseUser = (await FirebaseAuth.instance
-                            .signInWithEmailAndPassword(
-                                email: email, password: password))
-                        .user;
+                    final UserCredential userCredential =
+                        await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: email,
+                      password: password,
+                    );
+
+                    final User? firebaseUser = userCredential.user;
+
                     if (firebaseUser != null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Login successful")));
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Home()));
+                      if (firebaseUser.emailVerified) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("Login successful")),
+                        );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Home(),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                                "Email not verified. Please check your email for a verification link."),
+                          ),
+                        );
+                        await FirebaseAuth.instance.signOut();
+                      }
                     } else {
                       print("Check the password");
                     }
                   } on FirebaseAuthException catch (e) {
                     print("Error $e");
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text("Something wrong"),
                       ),
                     );
@@ -127,10 +149,10 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ForgetPassword()));
+                            builder: (context) => const ForgetPassword()));
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 121, 3, 206),
+                    backgroundColor: Color.fromARGB(255, 8, 35, 47),
                   ),
                   icon: const Icon(
                     Icons.password_rounded,
@@ -140,11 +162,11 @@ class _LoginPageState extends State<LoginPage> {
                     "Forget Password",
                     style: TextStyle(fontSize: 18),
                   )),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               const Text(
-                "Dont have an account",
+                "Don't have an account",
                 style: TextStyle(fontSize: 15),
               ),
               const SizedBox(
@@ -160,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 121, 3, 206),
+                      backgroundColor: Color.fromARGB(255, 8, 35, 47),
                     ),
                     icon: const Icon(
                       Icons.arrow_forward,
@@ -171,11 +193,21 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(fontSize: 18),
                     )),
               ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AdminLogin()));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 8, 35, 47),
+                  ),
+                  child: const Text('Login as admin'))
             ],
           ),
         ),
       ),
-      // ),
     );
   }
 }

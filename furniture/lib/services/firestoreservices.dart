@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:furniture/consts/firebase_consts.dart';
 import 'package:furniture/models/categorymodel.dart';
 
@@ -17,6 +19,8 @@ class FirestoreServices {
         .where('p_approved', isEqualTo: 'true')
         .snapshots();
   }
+
+  static updateUserData(String id, Map<String, String> map) {}
   // static getProduct(category) async {
   //   return firestore
   //       .collection(productCollection)

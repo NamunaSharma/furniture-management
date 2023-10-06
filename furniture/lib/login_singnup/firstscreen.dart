@@ -1,5 +1,8 @@
+// ignore_for_file: sort_child_properties_last, prefer_const_constructors
+
 import 'package:flutter/material.dart';
-import 'package:furniture/useroradmin.dart';
+import 'package:furniture/login_singnup/loginpage.dart';
+
 // import 'useroradmin.dart';
 class FirstScreen extends StatefulWidget {
   const FirstScreen({super.key});
@@ -16,7 +19,7 @@ class _FirstScreenState extends State<FirstScreen> {
         body: Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage('images/image 7.webp'), fit: BoxFit.cover)),
       child: Column(
@@ -25,15 +28,15 @@ class _FirstScreenState extends State<FirstScreen> {
         children: [
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.3,
-            child: Text(
-              "Find the best                       Second-Hand Furniture !",
+            child: const Text(
+              "Find the best                           Second-Hand Furniture !",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.brown,
-                  fontSize: 35),
+                  color: Color.fromARGB(255, 8, 35, 47),
+                  fontSize: 30),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 250,
           ),
           ElevatedButton(
@@ -41,11 +44,11 @@ class _FirstScreenState extends State<FirstScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => UserorAdmin(),
+                  builder: (context) => LoginPage(),
                 ),
               );
             },
-            child: Text('Get Started'),
+            child: const Text('Get Started'),
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.brown, elevation: 100),
           ),

@@ -1,6 +1,9 @@
 // import 'package:flutter/material.dart';
+// ignore_for_file: library_private_types_in_public_api, sized_box_for_whitespace, deprecated_member_use, duplicate_ignore, prefer_const_constructors
+
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:furniture/home_screen/Darksofa.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 // Define the GridItem class
@@ -21,7 +24,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0; // Initially select the first category
 
-  List<String> categories = ["Chair", "Table", "Bed"];
+  List<String> categories = ["Sofa", "Table", "Bed"];
 
   final List<String> sliderImages = [
     "images/monsoon-sale-2.jpg",
@@ -50,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _startAutoPlay() {
-    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       if (_currentPage < sliderImages.length - 1) {
         _currentPage++;
       } else {
@@ -58,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       _pageController.animateToPage(
         _currentPage,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     });
@@ -80,23 +83,23 @@ class _HomeScreenState extends State<HomeScreen> {
         shrinkWrap: true,
         children: [
           Container(
-            padding: EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
             // color: Color.fromARGB(255, 202, 201, 201),
             width: MediaQuery.of(context).size.width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "Best Furniture",
                   style: TextStyle(
                       color: Color.fromARGB(255, 8, 35, 47),
                       fontSize: 26,
                       fontWeight: FontWeight.w900),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 2,
                 ),
-                Text(
+                const Text(
                   "For Your House",
                   style: TextStyle(
                       color: Color.fromARGB(255, 8, 35, 47),
@@ -109,24 +112,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 //   height: 70,
                 //   width: 370,
                 // ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
                   alignment: Alignment.center,
                   height: 40,
-                  color: Color.fromARGB(255, 244, 242, 242),
+                  color: const Color.fromARGB(255, 244, 242, 242),
                   child: TextFormField(
                     decoration: InputDecoration(
-                      suffixIcon: Icon(Icons.search),
+                      suffixIcon: const Icon(Icons.search),
                       filled: true,
-                      suffixIconColor: Color.fromARGB(255, 8, 35, 47),
+                      suffixIconColor: const Color.fromARGB(255, 8, 35, 47),
                       // iconColor: Color.fromARGB(255, 8, 35, 47),
                       // fillColor: Colors.white,
                       hintText: "Search Products....",
-                      hintStyle: TextStyle(
-                          backgroundColor:
-                              const Color.fromARGB(255, 230, 228, 228)),
+                      hintStyle: const TextStyle(
+                          backgroundColor: Color.fromARGB(255, 230, 228, 228)),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide:
@@ -134,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
                   height: 200,
                   width: double.maxFinite,
@@ -152,10 +154,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
-                Text(
+                const Text(
                   "Top Categories",
                   style: TextStyle(
                     fontSize: 20,
@@ -163,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Color.fromARGB(255, 8, 35, 47),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -171,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     for (int index = 0; index < categories.length; index++) ...[
                       if (index != 0)
-                        SizedBox(width: 13), // Add space between buttons
+                        const SizedBox(width: 13), // Add space between buttons
                       ElevatedButton(
                         onPressed: () {
                           setState(() {
@@ -179,13 +181,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: selectedIndex == index
-                              ? Color.fromARGB(255, 8, 35, 47)
-                              : Colors.white, // Background color
-                          onPrimary: selectedIndex == index
+                          foregroundColor: selectedIndex == index
                               ? Colors.white
-                              : Colors.black, // Text color
-                          minimumSize: Size(100, 50), // Adjust button size
+                              // ignore: deprecated_member_use
+                              : Colors.black,
+                          primary: selectedIndex == index
+                              ? const Color.fromARGB(255, 8, 35, 47)
+                              : Colors.white, // Text color
+                          minimumSize:
+                              const Size(100, 50), // Adjust button size
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 10.0), // Adjust border radius
@@ -193,21 +197,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: Text(
                           categories[index],
-                          style: TextStyle(fontSize: 18), // Text size
+                          style: const TextStyle(fontSize: 18), // Text size
                         ),
                       ),
                     ],
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount:
                       gridItems.length, // Use the length of the gridItems list
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 12,
@@ -224,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.grey.withOpacity(0.5), // Shadow color
                             spreadRadius: 2,
                             blurRadius: 4,
-                            offset: Offset(0, 2), // Shadow position
+                            offset: const Offset(0, 2), // Shadow position
                           ),
                         ],
                       ),
@@ -245,20 +249,35 @@ class _HomeScreenState extends State<HomeScreen> {
                                 item.text.text // Use the text from the GridItem
                                     .fontWeight(FontWeight.bold)
                                     .color(
-                                      Color.fromARGB(255, 8, 35, 47),
+                                      const Color.fromARGB(255, 8, 35, 47),
                                     ) // Pure black text color
                                     .make(),
                           ),
                           5.heightBox,
-                          Center(
-                            child: "NRs. 1800"
-                                .text
-                                .color(
-                                  Color.fromARGB(255, 8, 35, 47),
-                                )
-                                .size(16)
-                                .fontWeight(FontWeight.bold)
-                                .make(),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 60),
+                            child: Row(
+                              children: [
+                                "NRs. 1800"
+                                    .text
+                                    .color(
+                                      const Color.fromARGB(255, 8, 35, 47),
+                                    )
+                                    .size(16)
+                                    .fontWeight(FontWeight.bold)
+                                    .make(),
+                                Center(
+                                  child: IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Sofa()));
+                                      },
+                                      icon: Icon(Icons.arrow_forward_sharp)),
+                                ),
+                              ],
+                            ),
                           ),
                           10.heightBox,
                         ],
@@ -266,11 +285,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
 
-                Text(
+                const Text(
                   "Popular items",
                   style: TextStyle(
                       color: Color.fromARGB(255, 8, 35, 47),
@@ -311,7 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Container(
                               width: MediaQuery.of(context).size.width / 2,
                               color: Colors.grey, // Background color
-                              padding: EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(8),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment
@@ -319,7 +338,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Text(
                                     item.text,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
@@ -327,8 +346,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     textAlign:
                                         TextAlign.center, // Center align text
                                   ),
-                                  SizedBox(height: 4),
-                                  Text(
+                                  const SizedBox(height: 4),
+                                  const Text(
                                     "NRs. 1800",
                                     style: TextStyle(
                                       color: Colors.white,

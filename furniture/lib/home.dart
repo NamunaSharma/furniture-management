@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, unused_import
+
 import 'package:flutter/material.dart';
 import 'package:furniture/addproduct.dart';
 import 'package:furniture/category_screen/category_screen.dart';

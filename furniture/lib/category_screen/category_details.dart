@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, unused_local_variable, unused_import, avoid_unnecessary_containers
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture/category_screen/item_details.dart';
@@ -35,12 +37,27 @@ class CategoryDetails extends StatelessWidget {
     var controller = Get.find<ProductController>();
 
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 159, 161, 161),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 8, 35, 47),
           // backgroundColor: Color.fromARGB(255, 125, 87, 63),
-          title: title!.text.fontWeight(FontWeight.bold).white.make(),
+          iconTheme: IconThemeData(color: Colors.white), // Corrected iconTheme
+          title: Text(
+            title!,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white, // Set the title text color
+            ),
+          ),
         ),
+
+        // appBar: AppBar(
+
+        //   backgroundColor: Color.fromARGB(255, 8, 35, 47),
+        //   // backgroundColor: Color.fromARGB(255, 125, 87, 63),
+        //   iconTheme: color(Colors.white),
+        //   title: title!.text.fontWeight(FontWeight.bold).white.make(),
+        // ),
         body: StreamBuilder(
             // stream: FirestoreServices.getProduct(title),
             stream: FirestoreServices.getProduct(title),
@@ -65,33 +82,33 @@ class CategoryDetails extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        physics: BouncingScrollPhysics(),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ...List.generate(
-                              controller.subcat.length,
-                              (index) => "${controller.subcat[index]}"
-                                  .text
-                                  .size(3)
-                                  .fontWeight(FontWeight.bold)
-                                  .color(Color.fromARGB(255, 169, 2, 2))
-                                  .makeCentered()
-                                  .box
-                                  .white
-                                  .rounded
-                                  .size(130, 60)
-                                  .margin(EdgeInsets.symmetric(horizontal: 4))
-                                  .make(),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      // SingleChildScrollView(
+                      //   scrollDirection: Axis.horizontal,
+                      //   physics: BouncingScrollPhysics(),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       ...List.generate(
+                      //         controller.subcat.length,
+                      //         (index) => "${controller.subcat[index]}"
+                      //             .text
+                      //             .size(3)
+                      //             .fontWeight(FontWeight.bold)
+                      //             .color(Color.fromARGB(255, 169, 2, 2))
+                      //             .makeCentered()
+                      //             .box
+                      //             .white
+                      //             .rounded
+                      //             .size(130, 60)
+                      //             .margin(EdgeInsets.symmetric(horizontal: 4))
+                      //             .make(),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
                       Expanded(
                         child: Container(
                           // color: Colors.grey,
@@ -101,7 +118,7 @@ class CategoryDetails extends StatelessWidget {
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
-                                    mainAxisExtent: 330.0,
+                                    mainAxisExtent: 270.0,
                                     mainAxisSpacing: 8,
                                     crossAxisSpacing: 8),
                             itemBuilder: (context, index) {
@@ -127,7 +144,9 @@ class CategoryDetails extends StatelessWidget {
                                   Spacer(),
                                   "${data[index]['p_name']}"
                                       .text
-                                      .color(Color.fromARGB(255, 28, 3, 255))
+                                      .color(
+                                        Color.fromARGB(255, 8, 35, 47),
+                                      )
                                       .size(16)
                                       .fontWeight(FontWeight.bold)
                                       .make(),
@@ -138,24 +157,25 @@ class CategoryDetails extends StatelessWidget {
                                       "${data[index]['p_price']}"
                                           .text
                                           .color(
-                                              Color.fromARGB(255, 28, 3, 255))
+                                            Color.fromARGB(255, 8, 35, 47),
+                                          )
                                           .size(16)
                                           .fontWeight(FontWeight.bold)
                                           .make(),
                                       Column(
                                         children: [
-                                          IconButton(
-                                              onPressed: () {
-                                                String productId =
-                                                    data[index].id;
-                                                Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                        builder: (_) {
-                                                  return UpdateProductPage(
-                                                      productId: productId);
-                                                }));
-                                              },
-                                              icon: Icon(Icons.edit)),
+                                          // IconButton(
+                                          //     onPressed: () {
+                                          //       String productId =
+                                          //           data[index].id;
+                                          //       Navigator.of(context).push(
+                                          //           MaterialPageRoute(
+                                          //               builder: (_) {
+                                          //         return UpdateProductPage(
+                                          //             productId: productId);
+                                          //       }));
+                                          //     },
+                                          //     icon: Icon(Icons.edit)),
                                           ElevatedButton(
                                             onPressed: () {
                                               String productId = data[index].id;
@@ -193,8 +213,8 @@ class CategoryDetails extends StatelessWidget {
                                   .white
                                   .margin(
                                       const EdgeInsets.symmetric(horizontal: 4))
-                                  .roundedSM
-                                  .outerShadowSm
+                                  .shadowLg
+                                  // .outerShadowSm
                                   .padding(const EdgeInsets.all(12.0))
                                   .make()
                                   .onTap(

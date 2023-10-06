@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, depend_on_referenced_packages, non_constant_identifier_names
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -50,12 +52,12 @@ class ProfileController extends GetxController {
     );
     isloading(false);
   }
-
-  // updateProfile(userName, password, ImageUrl) async {
-  //   var store = firestore.collection(usersCollection).doc(currentUser!.uid);
-  //   await store.set(
-  //       {'userName': userName, 'password': password, 'ImageUrl': ImageUrl},
-  //       SetOptions(merge: true));
-  //   isloading(false);
-  // }
 }
+//   updateProfile(userName, password, ImageUrl) async {
+//     var store = firestore.collection(usersCollection).doc(currentUser!.uid);
+//     await store.set(
+//         {'userName': userName, 'password': password, 'ImageUrl': ImageUrl},
+//         SetOptions(merge: true));
+//     isloading(false);
+//   }
+// }

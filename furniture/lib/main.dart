@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, prefer_const_constructors
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture/addproduct.dart';
@@ -28,18 +30,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           scaffoldBackgroundColor: Colors.transparent,
           appBarTheme:
-              AppBarTheme(iconTheme: IconThemeData(color: Colors.black))),
-      // home: AdminDashboard(),
-      //home: AdminHomePage()
-      // home: LoginPage(),
-      // //home: ProfileScreen(),
-      // home: Home(),
-      // home: AddProduct(),
-      //  home: CategoryScreen(),
-      // home: AdminLogin(),
-      // home: AdminDsh(),
-      home: CategoryScreen(),
-      // home: Adminn(),
+              const AppBarTheme(iconTheme: IconThemeData(color: Colors.black))),
+      // home: const LoginPage(),
+      home: FirstScreen(),
     );
   }
 }

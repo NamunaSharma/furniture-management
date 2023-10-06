@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, no_leading_underscores_for_local_identifiers, avoid_print
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';

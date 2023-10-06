@@ -8,7 +8,7 @@ Widget exitDialog(context) {
       mainAxisSize: MainAxisSize.min,
       children: [
         "Confirm".text.fontWeight(FontWeight.bold).size(14).make(),
-        Divider(),
+        const Divider(),
         10.heightBox,
         "Are you sure you want to exit".text.make(),
         10.heightBox,
@@ -19,15 +19,15 @@ Widget exitDialog(context) {
                 onPressed: () {
                   SystemNavigator.pop();
                 },
-                child: Text("Yes")),
+                child: const Text("Yes")),
             ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("No"))
+                child: const Text("No"))
           ],
         )
       ],
-    ).box.color(Colors.blue).padding(EdgeInsets.all(12)).roundedSM.make(),
+    ).box.color(Colors.blue).padding(const EdgeInsets.all(12)).roundedSM.make(),
   );
 }

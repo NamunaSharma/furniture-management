@@ -1,12 +1,14 @@
+// ignore_for_file: depend_on_referenced_packages, unused_import, use_key_in_widget_constructors, prefer_const_constructors, avoid_unnecessary_containers, use_build_context_synchronously, prefer_const_declarations
+
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:furniture/consts/firebase_consts.dart';
-
+import 'package:crypto/crypto.dart'; // For password hashing
+import 'dart:convert'; // For password hashing
 import 'loginpage.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+  const SignUp({Key? key});
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -19,22 +21,26 @@ class _SignUpState extends State<SignUp> {
 
   final _formkey = GlobalKey<FormState>();
   String? name;
+
+  String _hashPassword(String password) {
+    final salt = 'your_salt'; // Replace with your own salt
+    final codec = utf8;
+    final key = utf8.encode('$salt$password');
+    final hmacSha256 = Hmac(sha256, key);
+    final digest = hmacSha256.convert(codec.encode(password));
+    return digest.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0XFFFDF4F5),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Signup'),
-        backgroundColor: Color.fromARGB(255, 121, 3, 206),
+        backgroundColor: Color.fromARGB(255, 8, 35, 47),
       ),
       body: SingleChildScrollView(
         child: Container(
-          // decoration: const BoxDecoration(
-          //   image: DecorationImage(
-          //     image: AssetImage("images/paw1end.png"),
-          //     // fit: BoxFit.cover,
-          //   ),
-          // ),
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Center(
@@ -42,7 +48,6 @@ class _SignUpState extends State<SignUp> {
                 key: _formkey,
                 child: Column(
                   children: [
-                    //usernanme
                     TextFormField(
                       controller: userNameController,
                       validator: (value) {
@@ -72,7 +77,7 @@ class _SignUpState extends State<SignUp> {
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.mail),
-                        label: Text('Email'),
+                        labelText: 'Email',
                         hintText: 'Enter Email',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(24.0)),
@@ -92,7 +97,7 @@ class _SignUpState extends State<SignUp> {
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.lock),
                         suffixIcon: Icon(Icons.visibility),
-                        label: Text('Password'),
+                        labelText: 'Password',
                         hintText: 'Enter Password',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(24.0)),
@@ -104,48 +109,65 @@ class _SignUpState extends State<SignUp> {
                       height: 50,
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formkey.currentState!.validate()) {
                             var userName = userNameController.text;
                             var email = emailController.text;
                             var password = passwordController.text;
 
-                            // Creating an account
-                            FirebaseAuth.instance
-                                .createUserWithEmailAndPassword(
-                                  email: email,
-                                  password: password,
-                                )
-                                .then((value) => {
-                                      FirebaseFirestore.instance
-                                          .collection("users")
-                                          .doc()
-                                          .set({
-                                        'userName': userName,
-                                        'email': email,
-                                        "password": password,
-                                        "id": currentUser!.uid,
-                                      })
-                                    });
-                            Navigator.push(
+                            try {
+                              UserCredential userCredential = await FirebaseAuth
+                                  .instance
+                                  .createUserWithEmailAndPassword(
+                                email: email,
+                                password: password,
+                              );
+
+                              // Send email verification
+                              await userCredential.user!
+                                  .sendEmailVerification();
+
+                              // Hash the password
+                              String hashedPassword = _hashPassword(password);
+
+                              // Get the Firebase Authentication user's 'uid'
+                              String userId = userCredential.user!.uid;
+
+                              // Add user data to Firestore with the Firebase Authentication 'uid'
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(userId)
+                                  .set({
+                                'userName': userName,
+                                'email': email,
+                                'password':
+                                    hashedPassword, // Store the hashed password
+                                'id': userId,
+                              });
+
+                              // Navigate to the login page
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginPage()));
-
-                            // Showing error
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //   const SnackBar(
-                            //     content: Text("Error creating user. Please try again."),
-                            //     backgroundColor: Colors.red,
-                            //   ),
-                            // );
+                                  builder: (context) => LoginPage(),
+                                ),
+                              );
+                            } catch (error) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      "Error creating user. Please try again."),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
                           }
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25),
                           ),
-                          backgroundColor: Color.fromARGB(255, 121, 3, 206),
+                          backgroundColor: Color.fromARGB(255, 8, 35, 47),
                         ),
                         child: const Text(
                           'SignUp',
