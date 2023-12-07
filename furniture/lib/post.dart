@@ -38,7 +38,7 @@ class Post extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
-          "Post a Product",
+          "My uploads",
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
         backgroundColor: Color.fromARGB(255, 8, 35, 47),

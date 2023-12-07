@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, sort_child_properties_last
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, sort_child_properties_last, prefer_const_constructors
 
 import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:furniture/consts/firebase_consts.dart';
 import 'package:furniture/controller/profilecontroller.dart';
 import 'package:furniture/login_singnup/loginpage.dart';
+import 'package:furniture/post.dart';
 import 'package:furniture/profile_screen/editprofilescreen.dart';
 import 'package:furniture/services/firestoreservices.dart';
 import 'package:get/get.dart';
@@ -143,6 +144,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 .make(),
                             "${data['email']}".text.black.make(),
                             const SizedBox(height: 20),
+                            ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) => Post())));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 10, 29, 44),
+                                  padding: const EdgeInsets.all(16),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                child: Text("My Uploads",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ))),
+                            SizedBox(
+                              height: 20,
+                            ),
+
                             // Rest of your code...
                             ElevatedButton(
                               onPressed: () async {

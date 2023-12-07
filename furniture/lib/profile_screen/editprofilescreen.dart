@@ -1,5 +1,3 @@
-
-
 // ignore_for_file: library_private_types_in_public_api, prefer_const_constructors, use_build_context_synchronously, unused_import
 
 import 'dart:io';
@@ -55,7 +53,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     var controller = Get.find<ProfileController>();
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 8, 35, 47),
       ),
@@ -93,9 +91,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   // Implement logic to change the profile image here
                   controller.changeImage(context);
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 10, 29, 44),
+                  padding: const EdgeInsets.all(16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
                 child: Text(
                   "Change",
-                  style: TextStyle(color: Colors.deepOrange),
+                  style: TextStyle(
+                      color: const Color.fromARGB(255, 250, 248, 248)),
                 ),
               ),
               Divider(),
@@ -135,9 +141,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                   // Implement logic to save profile changes here
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 10, 29, 44),
+                  padding: const EdgeInsets.all(16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
                 child: Text(
                   "Save",
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: const Color.fromARGB(255, 254, 254, 254)),
                 ),
               ),
             ],

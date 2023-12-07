@@ -117,7 +117,7 @@ class _AddProductState extends State<AddProduct> {
                         CircleAvatar(
                           radius: 100,
                           backgroundImage: NetworkImage(
-                              'https://t3.ftcdn.net/jpg/04/12/57/22/360_F_412572270_OGw5hFLVwWoBCOdwWjLa1qGHsYU444PI.jpg'),
+                              'https://cdn4.iconfinder.com/data/icons/images-image-files-7/24/round_image_circle_picture_photo_photography-512.png'),
                         ),
                       Positioned(
                         child: IconButton(

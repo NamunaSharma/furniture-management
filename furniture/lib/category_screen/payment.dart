@@ -1,91 +1,111 @@
-// ignore_for_file: duplicate_import, use_key_in_widget_constructors, prefer_const_constructors, deprecated_member_use
+// import 'package:flutter/material.dart';
+// import 'package:flutter_paypal/flutter_paypal.dart';
+// import 'package:furniture/category_screen/constants.dart';
+// import 'package:furniture/home_screen/homescreen.dart';
+// import 'package:furniture/paymentsuccess.dart';
 
-import 'package:flutter/material.dart';
+// class Payment extends StatefulWidget {
+//   const Payment({super.key});
+
+//   @override
+//   State<Payment> createState() => _PaymentState();
+// }
+
+// class _PaymentState extends State<Payment> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Colors.white,
+//       appBar: AppBar(
+//       ),
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             ElevatedButton(
+//                 onPressed: () {
+//                   Navigator.of(context).push(
+//                     MaterialPageRoute(
+//                       builder: (BuildContext context) => UsePaypal(
+//                           sandboxMode: true,
+//                           clientId: "${Constants.clientId}",
+//                           secretKey: "${Constants.secretKey}",
+//                           returnURL: "${Constants.returnURL}",
+//                           cancelURL: "${Constants.cancelURL}",
+//                           transactions: const [
+//                             {
+//                               "amount": {
+//                                 "total": '10.12',
+//                                 "currency": "USD",
+//                                 "details": {
+//                                   "subtotal": '10.12',
+//                                   "shipping": '0',
+//                                   "shipping_discount": 0
+//                                 }
+//                               },
+//                               "description":
+//                                   "The payment transaction description.",
+//                               // "payment_options": {
+//                               //   "allowed_payment_method":
+//                               //       "INSTANT_FUNDING_SOURCE"
+//                               // },
+//                               "item_list": {
+//                                 "items": [
+//                                   {
+//                                     "name": "A demo product",
+//                                     "quantity": 1,
+//                                     "price": '10.12',
+//                                     "currency": "USD"
+//                                   }
+//                                 ],
+
+//                                 // shipping address is not required though
+//                                 "shipping_address": {
+//                                   "recipient_name": "Jane Foster",
+//                                   "line1": "Travis County",
+//                                   "line2": "",
+//                                   "city": "Austin",
+//                                   "country_code": "US",
+//                                   "postal_code": "73301",
+//                                   "phone": "+00000000",
+//                                   "state": "Texas"
+//                                 },
+//                               }
+//                             }
+//                           ],
+//                           note: "Contact us for any questions on your order.",
+//                           onSuccess: (Map params) async {
+//                             print("onSuccess: $params");
+//                           },
+//                           onError: (error) {
+//                             print("onError: $error");
+//                           },
+//                           onCancel: (params) {
+//                             print('cancelled: $params');
+//                           }),
+//                     ),
+//                   );
+//                 },
+//                 child: Text('Pay With PayPal')
+//                 )
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 import 'package:flutter/material.dart';
 
-class KhaltiPaymentScreen extends StatelessWidget {
+class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
+
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 155, 153, 153),
-      appBar: AppBar(
-        title: const Text("Admin Dashboard"),
-        backgroundColor: const Color.fromARGB(255, 26, 38, 47),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Enter Payment Details',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 20),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Card Number',
-                hintText: 'XXXX XXXX XXXX XXXX',
-                prefixIcon: Icon(Icons.credit_card),
-              ),
-            ),
-            SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Expiration Date',
-                      hintText: 'MM/YY',
-                      prefixIcon: Icon(Icons.calendar_today),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 20),
-                Expanded(
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'CVV',
-                      hintText: 'XXX',
-                      prefixIcon: Icon(Icons.lock),
-                    ),
-                    obscureText: true,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Cardholder Name',
-                hintText: 'John Doe',
-                prefixIcon: Icon(Icons.person),
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Perform payment processing logic here
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.all(16),
-                primary: Colors.blue,
-              ),
-              child: Text(
-                'Make Payment',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return const Placeholder();
   }
 }

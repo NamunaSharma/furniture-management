@@ -50,7 +50,8 @@ class _FirstScreenState extends State<FirstScreen> {
             },
             child: const Text('Get Started'),
             style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.brown, elevation: 100),
+              backgroundColor: Color.fromARGB(255, 8, 35, 47),
+            ),
           ),
         ],
       ),

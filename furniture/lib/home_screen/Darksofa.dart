@@ -25,7 +25,7 @@
 //         Text("Seller number:987665432"),
 //         Text("Seller location:Banasathali"),
 
-// ignore_for_file: file_names, prefer_const_constructors, deprecated_member_use
+// ignore_for_file: file_names, prefer_const_constructors, deprecated_member_use, unused_import
 
 //         ],
 //       ),
@@ -33,6 +33,7 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:furniture/category_screen/item_details.dart';
 import 'package:furniture/category_screen/payment.dart';
 
 class Sofa extends StatefulWidget {
@@ -128,7 +129,9 @@ class _SofaState extends State<Sofa> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => KhaltiPaymentScreen()),
+                        builder: (context) => ItemDetails(
+                              title: '',
+                            )),
                   );
                 },
                 style: ElevatedButton.styleFrom(

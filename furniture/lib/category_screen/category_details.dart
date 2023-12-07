@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, unused_local_variable, unused_import, avoid_unnecessary_containers
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture/category_screen/item_details.dart';
 import 'package:furniture/controller/productcontroller.dart';
@@ -35,6 +36,7 @@ class CategoryDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<ProductController>();
+    var currentUserId = FirebaseAuth.instance.currentUser?.uid ?? '';
 
     return Scaffold(
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
@@ -51,15 +53,8 @@ class CategoryDetails extends StatelessWidget {
           ),
         ),
 
-        // appBar: AppBar(
-
-        //   backgroundColor: Color.fromARGB(255, 8, 35, 47),
-        //   // backgroundColor: Color.fromARGB(255, 125, 87, 63),
-        //   iconTheme: color(Colors.white),
-        //   title: title!.text.fontWeight(FontWeight.bold).white.make(),
-        // ),
+      
         body: StreamBuilder(
-            // stream: FirestoreServices.getProduct(title),
             stream: FirestoreServices.getProduct(title),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -82,33 +77,7 @@ class CategoryDetails extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // SingleChildScrollView(
-                      //   scrollDirection: Axis.horizontal,
-                      //   physics: BouncingScrollPhysics(),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       ...List.generate(
-                      //         controller.subcat.length,
-                      //         (index) => "${controller.subcat[index]}"
-                      //             .text
-                      //             .size(3)
-                      //             .fontWeight(FontWeight.bold)
-                      //             .color(Color.fromARGB(255, 169, 2, 2))
-                      //             .makeCentered()
-                      //             .box
-                      //             .white
-                      //             .rounded
-                      //             .size(130, 60)
-                      //             .margin(EdgeInsets.symmetric(horizontal: 4))
-                      //             .make(),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 10,
-                      // ),
+                      
                       Expanded(
                         child: Container(
                           // color: Colors.grey,
@@ -124,13 +93,7 @@ class CategoryDetails extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final productData = data[index];
                               var item = gridItems[index];
-                              // bool p_approved =
-                              //     productData['p_approved'] == true;
-
-                              // if (!p_approved) {
-                              //   // Don't display the product if it's not approved
-                              //   return Container(); // Empty container to hide the item
-                              // } // Get the GridItem at the specified index
+                             
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -164,43 +127,37 @@ class CategoryDetails extends StatelessWidget {
                                           .make(),
                                       Column(
                                         children: [
-                                          // IconButton(
-                                          //     onPressed: () {
-                                          //       String productId =
-                                          //           data[index].id;
-                                          //       Navigator.of(context).push(
-                                          //           MaterialPageRoute(
-                                          //               builder: (_) {
-                                          //         return UpdateProductPage(
-                                          //             productId: productId);
-                                          //       }));
-                                          //     },
-                                          //     icon: Icon(Icons.edit)),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              String productId = data[index].id;
-                                              Navigator.push(
+                                          
+                                          if (currentUserId ==
+                                              data[index]['userId'])
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                String productId =
+                                                    data[index].id;
+                                                Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                      builder: ((context) =>
-                                                          DeleteProductPage(
-                                                            productId:
-                                                                productId,
-                                                            currentImageUrl: '',
-                                                          ))));
-                                            },
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.white),
+                                                    builder: ((context) =>
+                                                        DeleteProductPage(
+                                                          productId: productId,
+                                                          currentImageUrl: '',
+                                                        )),
+                                                  ),
+                                                );
+                                              },
+                                              style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                  Colors.white,
+                                                ),
+                                              ),
+                                              child: Icon(
+                                                Icons.delete,
+                                                size: 15,
+                                                color: Color.fromARGB(
+                                                    199, 220, 34, 34),
+                                              ),
                                             ),
-                                            child: Icon(
-                                              Icons.delete,
-                                              size: 15,
-                                              color: Color.fromARGB(
-                                                  199, 220, 34, 34),
-                                            ),
-                                          ),
                                         ],
                                       ),
                                     ],

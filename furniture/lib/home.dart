@@ -47,8 +47,7 @@ class Home extends StatelessWidget {
     var navBody = [
       HomeScreen(),
       CategoryScreen(),
-      Post(),
-      // AddProduct(),
+      AddProduct(),
       ProfileScreen(),
     ];
     return WillPopScope(
